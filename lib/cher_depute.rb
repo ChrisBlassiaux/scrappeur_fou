@@ -7,13 +7,9 @@ require 'rubocop'
 $annuaire = Nokogiri::HTML(open("http://www2.assemblee-nationale.fr/deputes/liste/alphabetique"))
 
 def get_deputies_urls
-  url_mairies = []
-  url_mairies = $annuaire.xpath('//*[@id="deputes-list"]/div/ul/li/a').map { |link| link["href"] }
   url_mairies_full = []
-  url_mairies.each do |i|
-    url_mairies_full << 'http://www2.assemblee-nationale.fr' + i
-  end
-  url_mairies_full
+  url_mairies_full = $annuaire.xpath('//*[@id="deputes-list"]/div/ul/li/a').map { |link| "https://www.nosdeputes.fr"+link["href"] }
+  return url_mairies_full
 end
 
 #p get_deputies_urls
@@ -65,18 +61,24 @@ end
 
 #p extract_email_of_url(get_deputies_urls)
 
-def names_and_emails_in_hash(first_name, last_name)
+def name_and_emails_in_hash
   result = []
-  first_name.each do |value|
-    result << {"first_name" => value}
-  end
-  last_name.each do |value|
-    result << {"last_name" => value}
+  i = 0
+  names.each do |key|
+    result << {"first_name" => value, "last_name" => value, "email" => value}
+    i += 1
   end
   result
 end
 
-#p names_and_emails_in_hash(get_deputies_first_name(get_deputies_first_name_and_last_name), get_deputies_last_name(get_deputies_first_name_and_last_name))
+def my_depute_list
+  names = get_deputies_first_name(get_deputies_first_name_and_last_name)
+  firstnames =  get_deputies_last_name(get_deputies_first_name_and_last_name)
+  mail = extract_email_of_url(get_deputies_urls)
+  i = 0
+end
+
+p my_depute_list
 
 #p names_and_emails_in_hash(get_deputies_first_name(get_deputies_first_name_and_last_name), get_deputies_last_name(get_deputies_first_name_and_last_name), extract_email_of_url(get_deputies_urls))
 
