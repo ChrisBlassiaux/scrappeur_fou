@@ -45,4 +45,4 @@ def name_and_emails_in_hash(names, emails)
   result
 end
 
-p name_and_emails_in_hash(get_townhall_name, extract_email_of_url(get_townhall_urls))
+#p name_and_emails_in_hash(get_townhall_name, extract_email_of_url(get_townhall_urls))
